@@ -1,8 +1,17 @@
-import { router } from 'constants'
+import { useMemo } from 'react'
 import { RouterProvider } from 'react-router-dom'
+import { ThemeProvider } from '@mui/material'
+import { CustomTheme, ThemeVariantsProps } from 'theme'
+import { router } from 'constants'
 
 function App() {
-  return <RouterProvider router={router} />
+  const activeTheme = useMemo(() => CustomTheme(ThemeVariantsProps.light), [])
+
+  return (
+    <ThemeProvider theme={activeTheme}>
+      <RouterProvider router={router} />
+    </ThemeProvider>
+  )
 }
 
 export default App
