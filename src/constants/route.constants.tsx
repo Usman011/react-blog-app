@@ -1,24 +1,25 @@
 import { createBrowserRouter } from 'react-router-dom'
-import { AuthLayout } from 'components/layout'
 import Login from 'pages/Login'
 import Signup from 'pages/Signup'
 import Home from 'pages/Home'
+import { AuthLayout } from 'components/layout'
+import { ROUTES } from 'types/routes.types'
 
 export const router = createBrowserRouter([
   {
-    path: '/signup',
+    path: ROUTES.SIGNUP,
     element: <Signup />
   },
   {
-    path: '/login',
+    path: ROUTES.LOGIN,
     element: <Login />
   },
   {
-    path: '/',
+    path: ROUTES.HOME,
     element: <AuthLayout />,
     children: [
       {
-        path: '/',
+        path: ROUTES.HOME,
         element: <Home />
       }
     ]

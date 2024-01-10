@@ -1,6 +1,6 @@
 import { useMemo } from 'react'
 import { RouterProvider } from 'react-router-dom'
-import { ThemeProvider } from '@mui/material'
+import { CssBaseline, ThemeProvider } from '@mui/material'
 import { CustomTheme, ThemeVariantsProps } from 'theme'
 import { router } from 'constants'
 
@@ -9,6 +9,7 @@ function App() {
 
   return (
     <ThemeProvider theme={activeTheme}>
+      <CssBaseline />
       <RouterProvider router={router} />
     </ThemeProvider>
   )
