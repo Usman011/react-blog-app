@@ -1,2 +1,4 @@
 import AuthLayout from './AuthLayout'
-export { AuthLayout }
+import PublicLayout from './PublicLayout'
+
+export { AuthLayout, PublicLayout }

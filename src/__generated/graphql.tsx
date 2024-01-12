@@ -213,7 +213,14 @@ export type CreateUserMutationVariables = Exact<{
 }>;
 
 
-export type CreateUserMutation = { __typename?: 'Mutation', register: { __typename?: 'LoginResponse', token: string, user: { __typename?: 'User', email: string, firstName: string, id: number, lastName: string, password: string } } };
+export type CreateUserMutation = { __typename?: 'Mutation', register: { __typename?: 'LoginResponse', token: string, user: { __typename?: 'User', email: string, firstName: string, id: number, lastName: string } } };
+
+export type GetUserMutationVariables = Exact<{
+  loginData: LoginInput;
+}>;
+
+
+export type GetUserMutation = { __typename?: 'Mutation', login: { __typename?: 'LoginResponse', token: string, user: { __typename?: 'User', email: string, firstName: string, id: number, lastName: string } } };
 
 
 export const CreateUserDocument = gql`
@@ -225,7 +232,6 @@ export const CreateUserDocument = gql`
       firstName
       id
       lastName
-      password
     }
   }
 }
@@ -256,3 +262,42 @@ export function useCreateUserMutation(baseOptions?: Apollo.MutationHookOptions<C
 export type CreateUserMutationHookResult = ReturnType<typeof useCreateUserMutation>;
 export type CreateUserMutationResult = Apollo.MutationResult<CreateUserMutation>;
 export type CreateUserMutationOptions = Apollo.BaseMutationOptions<CreateUserMutation, CreateUserMutationVariables>;
+export const GetUserDocument = gql`
+    mutation getUser($loginData: LoginInput!) {
+  login(loginData: $loginData) {
+    token
+    user {
+      email
+      firstName
+      id
+      lastName
+    }
+  }
+}
+    `;
+export type GetUserMutationFn = Apollo.MutationFunction<GetUserMutation, GetUserMutationVariables>;
+
+/**
+ * __useGetUserMutation__
+ *
+ * To run a mutation, you first call `useGetUserMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useGetUserMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [getUserMutation, { data, loading, error }] = useGetUserMutation({
+ *   variables: {
+ *      loginData: // value for 'loginData'
+ *   },
+ * });
+ */
+export function useGetUserMutation(baseOptions?: Apollo.MutationHookOptions<GetUserMutation, GetUserMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<GetUserMutation, GetUserMutationVariables>(GetUserDocument, options);
+      }
+export type GetUserMutationHookResult = ReturnType<typeof useGetUserMutation>;
+export type GetUserMutationResult = Apollo.MutationResult<GetUserMutation>;
+export type GetUserMutationOptions = Apollo.BaseMutationOptions<GetUserMutation, GetUserMutationVariables>;

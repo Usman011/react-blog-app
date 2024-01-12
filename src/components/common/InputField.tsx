@@ -5,7 +5,7 @@ import Visibility from '@mui/icons-material/Visibility'
 import VisibilityOff from '@mui/icons-material/VisibilityOff'
 import { TextField } from '@mui/material'
 import { Control, Controller, FieldValues, Path, PathValue } from 'react-hook-form'
-import { INPUT_TYPES } from 'types/form.types'
+import {  INPUT_TYPES, INPUT_VARIANTS } from 'types/form.types'
 
 export type InputFieldProps<TFieldValues extends FieldValues> = {
   name: Path<TFieldValues>
@@ -48,7 +48,7 @@ const InputField = <TFieldValues extends FieldValues = FieldValues>({
           sx={{ marginTop: '1rem' }}
           {...field}
           type={type === INPUT_TYPES.PASSWORD && showPassword ? type : INPUT_TYPES.TEXT}
-          variant='outlined'
+          variant={INPUT_VARIANTS.OUTLINED}
           name={name}
           label={label}
           disabled={disabled}

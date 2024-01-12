@@ -1,8 +1,14 @@
-import useAuthStore, { AuthState, authInitialState } from 'stores/auth'
+import useAuthStore, { IUser, authInitialState } from 'stores/auth'
 
-export const loginUser = (formData: AuthState) => {
+interface ILoginForm {
+  token: string
+  user: IUser
+}
+
+export const setUser = (formData: ILoginForm) => {
   useAuthStore.setState(() => ({
-    ...formData
+    ...formData,
+    isAuthenticated: true
   }))
 }
 

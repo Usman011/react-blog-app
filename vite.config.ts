@@ -19,7 +19,8 @@ export default defineConfig({
       stores: '/src/stores',
       constants: '/src/constants',
       api: '/src/api',
-      types: '/src/types'
+      types: '/src/types',
+      __generated: '/src/__generated'
     }
   }
 })

@@ -1,14 +1,13 @@
 import { create } from 'zustand'
-import { loginUser, logoutUser } from './actions'
+import { setUser, logoutUser } from './actions'
 import { User } from '__generated/graphql'
 
-interface IUser extends Omit<User, 'comments' | 'posts'> {
-  isAuthenticated: boolean
-}
+export type IUser = Omit<User, 'comments' | 'posts' | 'password'>
 
 export interface AuthState {
   token: string
   user: IUser
+  isAuthenticated: boolean
 }
 
 const authInitialState: AuthState = {
@@ -18,9 +17,8 @@ const authInitialState: AuthState = {
     firstName: '',
     id: -1,
     lastName: '',
-    password: '',
-    isAuthenticated: false
-  }
+  },
+  isAuthenticated: false
 }
 
 const useAuthStore = create(() => ({
@@ -28,4 +26,4 @@ const useAuthStore = create(() => ({
 }))
 
 export default useAuthStore
-export { logoutUser, loginUser, authInitialState }
+export { logoutUser, setUser, authInitialState }
