@@ -22,3 +22,10 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+#graphql
+/src/__generated/**
+
+#env
+.env
+.env.local

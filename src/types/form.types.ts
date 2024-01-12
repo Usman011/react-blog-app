@@ -1,24 +1,20 @@
-export interface ILoginForm {
-  email: string
-  password: string
-}
+import { UserInput } from '__generated/graphql'
 
-export interface ISignupForm {
-  email: string
-  password: string
-  name: string
+export interface ISignupForm extends UserInput {
   confirmPassword: string
 }
 
 export enum FIELDS {
-  NAME = 'name',
+  FIRST_NAME = 'firstName',
+  LAST_NAME = 'lastName',
   PASSWORD = 'password',
   EMAIL = 'email',
   CONFIRM_PASSWORD = 'confirmPassword'
 }
 
 export enum LABELS {
-  NAME = 'Name',
+  FIRST_NAME = 'First Name',
+  LAST_NAME = 'Last Name',
   PASSWORD = 'Password',
   EMAIL = 'Email',
   CONFIRM_PASSWORD = 'Confirm Password'
@@ -33,5 +29,5 @@ export enum INPUT_TYPES {
   RADIO = 'radio',
   DATE = 'date',
   FILE = 'file',
-  SELECT = 'select',
+  SELECT = 'select'
 }
