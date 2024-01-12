@@ -1,5 +1,6 @@
 import ReactDOM from 'react-dom/client'
 import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client'
+import { SnackbarProvider } from 'notistack'
 import App from './App.tsx'
 
 const client = new ApolloClient({
@@ -9,6 +10,8 @@ const client = new ApolloClient({
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <ApolloProvider client={client}>
-    <App />
+    <SnackbarProvider maxSnack={3} autoHideDuration={3000}>
+      <App />
+    </SnackbarProvider>
   </ApolloProvider>
 )

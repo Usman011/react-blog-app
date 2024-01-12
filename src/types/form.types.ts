@@ -1,7 +1,36 @@
 import { UserInput } from '__generated/graphql'
 
-export interface ISignupForm extends UserInput {
+export  interface ISignupForm extends UserInput {
   confirmPassword: string
+}
+
+export enum ALERT_TYPE {
+  ERROR = 'error',
+  SUCCESS = 'success',
+  WARNING = 'warning'
+}
+
+export enum BUTTON_TYPES {
+  BUTTON = 'button',
+  SUBMIT = 'submit',
+  RESET = 'reset'
+}
+
+export enum SIZES {
+  LARGE = 'large',
+  MEDIUM = 'medium',
+  SMALL = 'small'
+}
+
+export enum INPUT_VARIANTS {
+  CONTAINED = 'contained',
+  OUTLINED = 'outlined',
+  TEXT = 'text'
+}
+
+export enum COLORS {
+  PRIMARY = 'primary',
+  SECONDARY = 'secondary'
 }
 
 export enum FIELDS {
@@ -30,4 +59,8 @@ export enum INPUT_TYPES {
   DATE = 'date',
   FILE = 'file',
   SELECT = 'select'
+}
+
+export enum COOKIES {
+  TOKEN = 'token'
 }

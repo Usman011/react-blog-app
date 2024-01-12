@@ -1,12 +1,30 @@
+import { useNavigate } from 'react-router'
+
+import Cookies from 'js-cookie'
+import { Box } from '@mui/material'
 import { yupResolver } from '@hookform/resolvers/yup'
-import { Box, Button } from '@mui/material'
 import { useForm } from 'react-hook-form'
+import { useSnackbar } from 'notistack'
+
 import InputField from 'components/common/InputField'
-import { FIELDS, INPUT_TYPES, LABELS } from 'types/form.types'
-import { LoginInput } from '__generated/graphql'
-import { loginValidationSchema } from 'components/LoginForm/validationSchema'
+import LoadingButton from 'components/common/LoadingButton'
+import { LoginInput, useGetUserMutation } from '__generated/graphql'
+import { loginValidationSchema } from './validationSchema'
+import { ALERT_TYPE, BUTTON_TYPES, COOKIES, FIELDS, INPUT_TYPES, LABELS } from 'types/form.types'
 
 const LoginForm = () => {
+  const { enqueueSnackbar } = useSnackbar()
+  const navigate = useNavigate()
+  const [mutation, { loading }] = useGetUserMutation({
+    onError: error =>
+      enqueueSnackbar(error.message, {
+        variant: ALERT_TYPE.ERROR
+      }),
+    onCompleted: res => {
+      Cookies.set(COOKIES.TOKEN, res.login.token)
+      navigate('/')
+    }
+  })
   const initialValues: LoginInput = {
     email: '',
     password: ''
@@ -18,6 +36,7 @@ const LoginForm = () => {
 
   const onSubmitHandler = (values: LoginInput) => {
     console.log(values)
+    mutation({ variables: { loginData: values } })
     reset(initialValues)
   }
 
@@ -25,7 +44,12 @@ const LoginForm = () => {
     <Box>
       <form onSubmit={handleSubmit(onSubmitHandler)}>
         <Box>
-          <InputField name={FIELDS.EMAIL} label={LABELS.EMAIL} control={control} />
+          <InputField
+            name={FIELDS.EMAIL}
+            label={LABELS.EMAIL}
+            control={control}
+            type={INPUT_TYPES.TEXT}
+          />
           <InputField
             name={FIELDS.PASSWORD}
             label={LABELS.PASSWORD}
@@ -34,9 +58,7 @@ const LoginForm = () => {
           />
 
           <Box mt={4}>
-            <Button variant='contained' fullWidth type='submit' size='large'>
-              Login
-            </Button>
+            <LoadingButton label='Login' fullWidth type={BUTTON_TYPES.SUBMIT} loading={loading} />
           </Box>
         </Box>
       </form>
@@ -45,5 +67,3 @@ const LoginForm = () => {
 }
 
 export default LoginForm
-
-
