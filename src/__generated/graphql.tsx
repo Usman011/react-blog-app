@@ -1,0 +1,258 @@
+import { gql } from '@apollo/client';
+import * as Apollo from '@apollo/client';
+export type Maybe<T> = T | null;
+export type InputMaybe<T> = Maybe<T>;
+export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
+export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
+export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
+export type MakeEmpty<T extends { [key: string]: unknown }, K extends keyof T> = { [_ in K]?: never };
+export type Incremental<T> = T | { [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never };
+const defaultOptions = {} as const;
+/** All built-in and custom scalars, mapped to their actual values */
+export type Scalars = {
+  ID: { input: string; output: string; }
+  String: { input: string; output: string; }
+  Boolean: { input: boolean; output: boolean; }
+  Int: { input: number; output: number; }
+  Float: { input: number; output: number; }
+};
+
+export type Comment = {
+  __typename?: 'Comment';
+  id: Scalars['Float']['output'];
+  parent?: Maybe<Comment>;
+  post: Post;
+  replies?: Maybe<Array<Comment>>;
+  text?: Maybe<Scalars['String']['output']>;
+  user: User;
+};
+
+export type CommentInput = {
+  postId?: InputMaybe<Scalars['Int']['input']>;
+  text: Scalars['String']['input'];
+};
+
+export type LoginInput = {
+  email: Scalars['String']['input'];
+  password: Scalars['String']['input'];
+};
+
+export type LoginResponse = {
+  __typename?: 'LoginResponse';
+  token: Scalars['String']['output'];
+  user: User;
+};
+
+export type Mutation = {
+  __typename?: 'Mutation';
+  addReplyToComment: Comment;
+  createComment: Comment;
+  createPost: SuccessResponse;
+  deleteCommentByPost: SuccessResponse;
+  deletePost: SuccessResponse;
+  login: LoginResponse;
+  register: LoginResponse;
+  updateComment: SuccessResponse;
+  updatePost: SuccessResponse;
+};
+
+
+export type MutationAddReplyToCommentArgs = {
+  data: ReplyInput;
+};
+
+
+export type MutationCreateCommentArgs = {
+  data: CommentInput;
+};
+
+
+export type MutationCreatePostArgs = {
+  data: PostInput;
+};
+
+
+export type MutationDeleteCommentByPostArgs = {
+  postId: Scalars['Int']['input'];
+};
+
+
+export type MutationDeletePostArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
+export type MutationLoginArgs = {
+  loginData: LoginInput;
+};
+
+
+export type MutationRegisterArgs = {
+  createUser: UserInput;
+};
+
+
+export type MutationUpdateCommentArgs = {
+  data: CommentInput;
+  id: Scalars['Int']['input'];
+};
+
+
+export type MutationUpdatePostArgs = {
+  data: PostInput;
+  id: Scalars['Int']['input'];
+};
+
+export type Post = {
+  __typename?: 'Post';
+  comments?: Maybe<Array<Comment>>;
+  content: Scalars['String']['output'];
+  id: Scalars['Float']['output'];
+  status: PostStatus;
+  title: Scalars['String']['output'];
+  user?: Maybe<User>;
+};
+
+export type PostInput = {
+  content: Scalars['String']['input'];
+  title: Scalars['String']['input'];
+};
+
+export enum PostStatus {
+  Draft = 'DRAFT',
+  Published = 'PUBLISHED'
+}
+
+export type Query = {
+  __typename?: 'Query';
+  Comment: Comment;
+  getComment: Array<Comment>;
+  getPost: Post;
+  getRepliesOfComment: Array<Comment>;
+  hello: Scalars['String']['output'];
+  listComments: Array<Comment>;
+  listPosts: Array<Post>;
+  paginatedPosts: Array<Post>;
+  search: Array<Post>;
+  user: User;
+};
+
+
+export type QueryCommentArgs = {
+  postId: Scalars['Int']['input'];
+};
+
+
+export type QueryGetCommentArgs = {
+  itemsPerPage?: Scalars['Int']['input'];
+  page?: Scalars['Int']['input'];
+  postId: Scalars['Int']['input'];
+};
+
+
+export type QueryGetPostArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
+export type QueryGetRepliesOfCommentArgs = {
+  commentId: Scalars['Int']['input'];
+  itemsPerPage?: Scalars['Int']['input'];
+  page?: Scalars['Int']['input'];
+};
+
+
+export type QueryPaginatedPostsArgs = {
+  itemsPerPage?: Scalars['Int']['input'];
+  page?: Scalars['Int']['input'];
+};
+
+
+export type QuerySearchArgs = {
+  input: Scalars['String']['input'];
+};
+
+
+export type QueryUserArgs = {
+  email: Scalars['String']['input'];
+};
+
+export type ReplyInput = {
+  commentId?: InputMaybe<Scalars['Int']['input']>;
+  postId?: InputMaybe<Scalars['Int']['input']>;
+  text: Scalars['String']['input'];
+};
+
+export type SuccessResponse = {
+  __typename?: 'SuccessResponse';
+  id?: Maybe<Scalars['Float']['output']>;
+  message?: Maybe<Scalars['String']['output']>;
+  success?: Maybe<Scalars['Boolean']['output']>;
+};
+
+export type User = {
+  __typename?: 'User';
+  comments: Array<Comment>;
+  email: Scalars['String']['output'];
+  firstName: Scalars['String']['output'];
+  id: Scalars['Float']['output'];
+  lastName: Scalars['String']['output'];
+  password: Scalars['String']['output'];
+  posts: Array<Post>;
+};
+
+export type UserInput = {
+  email: Scalars['String']['input'];
+  firstName: Scalars['String']['input'];
+  lastName: Scalars['String']['input'];
+  password: Scalars['String']['input'];
+};
+
+export type CreateUserMutationVariables = Exact<{
+  createUser: UserInput;
+}>;
+
+
+export type CreateUserMutation = { __typename?: 'Mutation', register: { __typename?: 'LoginResponse', token: string, user: { __typename?: 'User', email: string, firstName: string, id: number, lastName: string, password: string } } };
+
+
+export const CreateUserDocument = gql`
+    mutation CreateUser($createUser: UserInput!) {
+  register(createUser: $createUser) {
+    token
+    user {
+      email
+      firstName
+      id
+      lastName
+      password
+    }
+  }
+}
+    `;
+export type CreateUserMutationFn = Apollo.MutationFunction<CreateUserMutation, CreateUserMutationVariables>;
+
+/**
+ * __useCreateUserMutation__
+ *
+ * To run a mutation, you first call `useCreateUserMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateUserMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createUserMutation, { data, loading, error }] = useCreateUserMutation({
+ *   variables: {
+ *      createUser: // value for 'createUser'
+ *   },
+ * });
+ */
+export function useCreateUserMutation(baseOptions?: Apollo.MutationHookOptions<CreateUserMutation, CreateUserMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreateUserMutation, CreateUserMutationVariables>(CreateUserDocument, options);
+      }
+export type CreateUserMutationHookResult = ReturnType<typeof useCreateUserMutation>;
+export type CreateUserMutationResult = Apollo.MutationResult<CreateUserMutation>;
+export type CreateUserMutationOptions = Apollo.BaseMutationOptions<CreateUserMutation, CreateUserMutationVariables>;

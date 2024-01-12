@@ -17,7 +17,7 @@ export type InputFieldProps<TFieldValues extends FieldValues> = {
   control: Control<TFieldValues>
   type?: string
   placeholder?: string
-  rows?: number
+  rows?: number 
   disabled?: boolean
   label: string
   multiline?: boolean
