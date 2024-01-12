@@ -8,20 +8,21 @@ import { useSnackbar } from 'notistack'
 
 import InputField from 'components/common/InputField'
 import LoadingButton from 'components/common/LoadingButton'
-import { LoginInput, useGetUserMutation } from '__generated/graphql'
+import { LoginInput, useLoginMutation } from '__generated/graphql'
 import { loginValidationSchema } from './validationSchema'
 import { ALERT_TYPE, BUTTON_TYPES, COOKIES, FIELDS, INPUT_TYPES, LABELS } from 'types/form.types'
 
 const LoginForm = () => {
   const { enqueueSnackbar } = useSnackbar()
   const navigate = useNavigate()
-  const [mutation, { loading }] = useGetUserMutation({
+  const [mutation, { loading }] = useLoginMutation({
     onError: error =>
       enqueueSnackbar(error.message, {
         variant: ALERT_TYPE.ERROR
       }),
     onCompleted: res => {
       Cookies.set(COOKIES.TOKEN, res.login.token)
+      Cookies.set(COOKIES.EMAIL, res.login.user.email)
       navigate('/')
     }
   })

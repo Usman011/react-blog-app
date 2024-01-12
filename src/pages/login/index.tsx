@@ -4,6 +4,8 @@ import { ROUTES } from 'types/routes.types'
 import { Flex, FormBox, StyledLink, WrapperCentered } from 'components/common/styles'
 
 const Login = () => {
+
+  console.log(import.meta.env.VITE_GRAPHQL_URL)
   return (
     <WrapperCentered>
       <FormBox>

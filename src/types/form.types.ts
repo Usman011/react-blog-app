@@ -62,5 +62,6 @@ export enum INPUT_TYPES {
 }
 
 export enum COOKIES {
-  TOKEN = 'token'
+  TOKEN = 'token',
+  EMAIL = 'email'
 }
