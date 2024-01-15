@@ -14,8 +14,8 @@ export const createUserMutation = gql`
   }
 `
 
-export const getUserMutation = gql`
-  mutation getUser($loginData: LoginInput!) {
+export const loginUserMutation = gql`
+  mutation login($loginData: LoginInput!) {
     login(loginData: $loginData) {
       token
       user {
@@ -27,4 +27,5 @@ export const getUserMutation = gql`
     }
   }
 `
+
 
