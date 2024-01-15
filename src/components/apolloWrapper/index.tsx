@@ -9,7 +9,7 @@ import {
   ApolloProvider
 } from '@apollo/client'
 import { onError } from '@apollo/client/link/error'
-import { ALERT_TYPE, COOKIES, ERROR_TYPE } from 'types/form.types.ts'
+import { ALERT_TYPE, COOKIES } from 'types/form.types.ts'
 import { useSnackbar } from 'notistack'
 import { logoutUser } from 'stores/auth'
 
@@ -30,26 +30,16 @@ const ApolloWrapper: React.FC<ApolloWrapperProps> = ({ children }) => {
     return forward(operation)
   })
 
-  const errors = onError(({ networkError, graphQLErrors }) => {
+  const errors = onError(({ graphQLErrors }) => {
     if (graphQLErrors) {
-      console.log('graphQLErrors', graphQLErrors)
       graphQLErrors.map(error => {
-        enqueueSnackbar(`Graphql Error: ${error. message}`, {
+        enqueueSnackbar(`Error: ${error.message}`, {
           variant: ALERT_TYPE.ERROR
         })
         if (error.extensions?.code === 500) {
-          Cookies.remove(COOKIES.EMAIL)
-          Cookies.remove(COOKIES.TOKEN)
           logoutUser()
         }
-     
       })
-    }
-
-    if (networkError?.message === ERROR_TYPE.UNAUTHORIZED) {
-      Cookies.remove(COOKIES.EMAIL)
-      Cookies.remove(COOKIES.TOKEN)
-      logoutUser()
     }
   })
 

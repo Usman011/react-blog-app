@@ -15,18 +15,19 @@ import LoadingButton from 'components/common/LoadingButton'
 import { useCreateUserMutation } from '__generated/graphql'
 import { useSnackbar } from 'notistack'
 import { alertMessage } from 'constants/alert.constants'
+import { useNavigate } from 'react-router'
+import { ROUTES } from 'types/routes.types'
 
 const SignupForm = () => {
   const { enqueueSnackbar } = useSnackbar()
+  const navigate = useNavigate()
   const [mutation, { loading }] = useCreateUserMutation({
-    onError: error =>
-      enqueueSnackbar(error.message, {
-        variant: ALERT_TYPE.ERROR
-      }),
-    onCompleted: () =>
+    onCompleted: () => {
       enqueueSnackbar(alertMessage.userCreated, {
         variant: ALERT_TYPE.SUCCESS
       })
+      navigate(ROUTES.HOME)
+    }
   })
 
   const initialValues: ISignupForm = {

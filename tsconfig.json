@@ -27,8 +27,8 @@
     "noFallthroughCasesInSwitch": true
   },
   "include": [
-    "src"
-, "codegen.ts"  ],
+    "src", "codegen.yml"
+  ],
   "references": [
     {
       "path": "./tsconfig.node.json"

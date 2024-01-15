@@ -1,7 +1,7 @@
 overwrite: true
 generates:
   src/__generated/graphql.tsx:
-    schema: ${VITE_GRAPHQL_URL}
+    schema: "http://localhost:3000/graphql"
     documents: "src/graphql/**/*.ts"
     ignoreNoDocuments: true
     plugins:
