@@ -229,6 +229,14 @@ export type GetUserQueryVariables = Exact<{
 
 export type GetUserQuery = { __typename?: 'Query', user: { __typename?: 'User', email: string, id: number, firstName: string, lastName: string } };
 
+export type PaginatedPostsQueryVariables = Exact<{
+  itemsPerPage: Scalars['Int']['input'];
+  page: Scalars['Int']['input'];
+}>;
+
+
+export type PaginatedPostsQuery = { __typename?: 'Query', paginatedPosts: Array<{ __typename?: 'Post', content: string, id: number, status: PostStatus, title: string, user?: { __typename?: 'User', email: string, firstName: string, id: number, lastName: string } | null }> };
+
 
 export const CreateUserDocument = gql`
     mutation CreateUser($createUser: UserInput!) {
@@ -351,3 +359,53 @@ export type GetUserQueryHookResult = ReturnType<typeof useGetUserQuery>;
 export type GetUserLazyQueryHookResult = ReturnType<typeof useGetUserLazyQuery>;
 export type GetUserSuspenseQueryHookResult = ReturnType<typeof useGetUserSuspenseQuery>;
 export type GetUserQueryResult = Apollo.QueryResult<GetUserQuery, GetUserQueryVariables>;
+export const PaginatedPostsDocument = gql`
+    query PaginatedPosts($itemsPerPage: Int!, $page: Int!) {
+  paginatedPosts(itemsPerPage: $itemsPerPage, page: $page) {
+    content
+    id
+    status
+    title
+    user {
+      email
+      firstName
+      id
+      lastName
+    }
+  }
+}
+    `;
+
+/**
+ * __usePaginatedPostsQuery__
+ *
+ * To run a query within a React component, call `usePaginatedPostsQuery` and pass it any options that fit your needs.
+ * When your component renders, `usePaginatedPostsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = usePaginatedPostsQuery({
+ *   variables: {
+ *      itemsPerPage: // value for 'itemsPerPage'
+ *      page: // value for 'page'
+ *   },
+ * });
+ */
+export function usePaginatedPostsQuery(baseOptions: Apollo.QueryHookOptions<PaginatedPostsQuery, PaginatedPostsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<PaginatedPostsQuery, PaginatedPostsQueryVariables>(PaginatedPostsDocument, options);
+      }
+export function usePaginatedPostsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<PaginatedPostsQuery, PaginatedPostsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<PaginatedPostsQuery, PaginatedPostsQueryVariables>(PaginatedPostsDocument, options);
+        }
+export function usePaginatedPostsSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<PaginatedPostsQuery, PaginatedPostsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<PaginatedPostsQuery, PaginatedPostsQueryVariables>(PaginatedPostsDocument, options);
+        }
+export type PaginatedPostsQueryHookResult = ReturnType<typeof usePaginatedPostsQuery>;
+export type PaginatedPostsLazyQueryHookResult = ReturnType<typeof usePaginatedPostsLazyQuery>;
+export type PaginatedPostsSuspenseQueryHookResult = ReturnType<typeof usePaginatedPostsSuspenseQuery>;
+export type PaginatedPostsQueryResult = Apollo.QueryResult<PaginatedPostsQuery, PaginatedPostsQueryVariables>;

@@ -53,7 +53,7 @@ export const lightModePalette: PaletteOptions = {
     dark: '#388e3c'
   },
   customText: '#002c59',
-  lightText: '#666666',
+  lightText: '#999999',
   customBackground: '#fff',
   hover: '#64b5f6'
 }

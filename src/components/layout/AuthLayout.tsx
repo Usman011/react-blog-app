@@ -1,16 +1,17 @@
-import React, { useEffect } from 'react';
-import { Outlet, useNavigate } from 'react-router';
+import React, { useEffect } from 'react'
+import { Outlet, useNavigate } from 'react-router'
 
-import { useSnackbar } from 'notistack';
-import Cookies from 'js-cookie';
+import { useSnackbar } from 'notistack'
+import Cookies from 'js-cookie'
 
-import Footer from 'components/common/Footer';
-import Navbar from 'components/common/Navbar';
-import useAuthStore, { AuthState } from 'stores/auth';
-import { ALERT_TYPE, COOKIES, ERROR_TYPE } from 'types/form.types';
-import { ROUTES } from 'types/routes.types';
-import { useGetUserLazyQuery } from '__generated/graphql';
-
+import Footer from 'components/common/Footer'
+import useAuthStore, { AuthState, setUser } from 'stores/auth'
+import { ALERT_TYPE, COOKIES, ERROR_TYPE } from 'types/form.types'
+import { ROUTES } from 'types/routes.types'
+import { useGetUserLazyQuery } from '__generated/graphql'
+import { Box } from '@mui/material'
+import Navbar from 'components/common/navbar'
+import FullScreenLoader from 'components/common/FullScreenLoader'
 
 const AuthLayout: React.FC = () => {
   const auth: AuthState = useAuthStore()
@@ -20,7 +21,8 @@ const AuthLayout: React.FC = () => {
     onError: error =>
       enqueueSnackbar(error.message, {
         variant: ALERT_TYPE.ERROR
-      })
+      }),
+    onCompleted: res => setUser(res.user)
   })
 
   useEffect(() => {
@@ -41,14 +43,15 @@ const AuthLayout: React.FC = () => {
   }, [auth.isAuthenticated])
 
   if (loading) {
-    return <h1> LoAdInG ......</h1>
+    return <FullScreenLoader />
   }
+  
   return (
-    <div>
+    <Box>
       <Navbar />
       <Outlet />
       <Footer />
-    </div>
+    </Box>
   )
 }
 

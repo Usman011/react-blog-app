@@ -18,6 +18,7 @@ export default defineConfig({
       theme: '/src/theme',
       stores: '/src/stores',
       constants: '/src/constants',
+      helpers: '/src/helpers',
       api: '/src/api',
       types: '/src/types',
       __generated: '/src/__generated'

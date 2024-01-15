@@ -1,10 +1,16 @@
-import Box from '@mui/material/Box'
-import useAuthStore from 'stores/auth'
+import { Container, Divider, Typography } from '@mui/material'
+import ListPosts from 'components/listPosts'
 
 const Home = () => {
-  const state = useAuthStore()
-  console.log('state', state)
-  return <Box>Home</Box>
+  return (
+    <Container maxWidth='md'>
+      <Typography variant='h4' fontWeight='bold' py={4}>
+        Recent Posts
+      </Typography>
+      <Divider />
+      <ListPosts />
+    </Container>
+  )
 }
 
 export default Home

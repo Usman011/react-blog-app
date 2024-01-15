@@ -1,11 +1,7 @@
 import useAuthStore, { IUser, authInitialState } from 'stores/auth'
-
-interface ILoginForm {
-  token: string
-  user: IUser
-}
-
-export const setUser = (formData: ILoginForm) => {
+import Cookies from 'js-cookie'
+import { COOKIES } from 'types/form.types'
+export const setUser = (formData: IUser) => {
   useAuthStore.setState(() => ({
     ...formData,
     isAuthenticated: true
@@ -13,6 +9,9 @@ export const setUser = (formData: ILoginForm) => {
 }
 
 export const logoutUser = () => {
+  Cookies.remove(COOKIES.EMAIL)
+  Cookies.remove(COOKIES.TOKEN)
+
   useAuthStore.setState(() => ({
     ...authInitialState
   }))
