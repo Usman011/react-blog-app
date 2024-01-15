@@ -1,6 +1,6 @@
 import { UserInput } from '__generated/graphql'
 
-export  interface ISignupForm extends UserInput {
+export interface ISignupForm extends UserInput {
   confirmPassword: string
 }
 
@@ -8,6 +8,13 @@ export enum ALERT_TYPE {
   ERROR = 'error',
   SUCCESS = 'success',
   WARNING = 'warning'
+}
+
+export enum ERROR_TYPE {
+  FORBIDDEN = 'FORBIDDEN',
+  UNAUTHORIZED = 'UNAUTHORIZED',
+  NOT_FOUND = 'NOT_FOUND',
+  INTERNAL_SERVER_ERROR = 'INTERNAL_SERVER_ERROR'
 }
 
 export enum BUTTON_TYPES {
