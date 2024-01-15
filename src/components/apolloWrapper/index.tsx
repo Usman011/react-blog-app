@@ -32,12 +32,20 @@ const ApolloWrapper: React.FC<ApolloWrapperProps> = ({ children }) => {
 
   const errors = onError(({ networkError, graphQLErrors }) => {
     if (graphQLErrors) {
-      graphQLErrors.map(({ message }) => {
-        enqueueSnackbar(`Graphql Error: ${message}`, {
+      console.log('graphQLErrors', graphQLErrors)
+      graphQLErrors.map(error => {
+        enqueueSnackbar(`Graphql Error: ${error. message}`, {
           variant: ALERT_TYPE.ERROR
         })
+        if (error.extensions?.code === 500) {
+          Cookies.remove(COOKIES.EMAIL)
+          Cookies.remove(COOKIES.TOKEN)
+          logoutUser()
+        }
+     
       })
     }
+
     if (networkError?.message === ERROR_TYPE.UNAUTHORIZED) {
       Cookies.remove(COOKIES.EMAIL)
       Cookies.remove(COOKIES.TOKEN)

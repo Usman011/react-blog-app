@@ -1,15 +1,16 @@
-import { useEffect } from 'react'
-import { Outlet, useNavigate } from 'react-router'
+import React, { useEffect } from 'react';
+import { Outlet, useNavigate } from 'react-router';
 
-import Cookies from 'js-cookie'
-import { useSnackbar } from 'notistack'
+import { useSnackbar } from 'notistack';
+import Cookies from 'js-cookie';
 
-import Footer from 'components/common/Footer'
-import Navbar from 'components/common/Navbar'
-import useAuthStore, { AuthState } from 'stores/auth'
-import { ALERT_TYPE, COOKIES } from 'types/form.types'
-import { ROUTES } from 'types/routes.types'
-import { useGetUserLazyQuery } from '__generated/graphql'
+import Footer from 'components/common/Footer';
+import Navbar from 'components/common/Navbar';
+import useAuthStore, { AuthState } from 'stores/auth';
+import { ALERT_TYPE, COOKIES, ERROR_TYPE } from 'types/form.types';
+import { ROUTES } from 'types/routes.types';
+import { useGetUserLazyQuery } from '__generated/graphql';
+
 
 const AuthLayout: React.FC = () => {
   const auth: AuthState = useAuthStore()
@@ -32,6 +33,9 @@ const AuthLayout: React.FC = () => {
         })
       }
     } else {
+      enqueueSnackbar(ERROR_TYPE.UNAUTHORIZED, {
+        variant: ALERT_TYPE.ERROR
+      })
       navigate(ROUTES.LOGIN)
     }
   }, [auth.isAuthenticated])
