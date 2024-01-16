@@ -45,11 +45,18 @@ const AuthLayout: React.FC = () => {
   if (loading) {
     return <FullScreenLoader />
   }
-  
+
   return (
     <Box>
       <Navbar />
-      <Outlet />
+      <Box
+        sx={{
+          minHeight: 'calc(100vh - 175px)',
+          height: '100%',
+        }}
+      >
+        <Outlet />
+      </Box>
       <Footer />
     </Box>
   )

@@ -1,8 +1,10 @@
-import { UserInput } from '__generated/graphql'
+import { Post, UserInput } from '__generated/graphql'
 
 export interface ISignupForm extends UserInput {
   confirmPassword: string
 }
+
+export type IPostForm = Pick<Post, 'title' | 'content'>
 
 export enum ALERT_TYPE {
   ERROR = 'error',
@@ -45,7 +47,11 @@ export enum FIELDS {
   LAST_NAME = 'lastName',
   PASSWORD = 'password',
   EMAIL = 'email',
-  CONFIRM_PASSWORD = 'confirmPassword'
+  CONFIRM_PASSWORD = 'confirmPassword',
+  CONTENT = 'content',
+  TITLE = 'title',
+  PREV_PASSWORD = 'prevPassword',
+  NEW_PASSWORD = 'password'
 }
 
 export enum LABELS {
@@ -53,7 +59,13 @@ export enum LABELS {
   LAST_NAME = 'Last Name',
   PASSWORD = 'Password',
   EMAIL = 'Email',
-  CONFIRM_PASSWORD = 'Confirm Password'
+  CONFIRM_PASSWORD = 'Confirm Password',
+  CONTENT = 'Content',
+  TITLE = 'Title',
+  PREV_PASSWORD = 'Previous Password',
+  NEW_PASSWORD = 'New  Password'
+
+
 }
 
 export enum INPUT_TYPES {

@@ -37,7 +37,13 @@ const PublicLayout: React.FC = () => {
   return (
     <div>
       <Navbar />
-      <Outlet />
+      <Box
+        sx={{
+          height: 'calc(100vh - 175px)'
+        }}
+      >
+        <Outlet />
+      </Box>
       <Footer />
     </div>
   )

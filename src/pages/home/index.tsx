@@ -3,7 +3,7 @@ import ListPosts from 'components/listPosts'
 
 const Home = () => {
   return (
-    <Container maxWidth='md'>
+    <Container maxWidth='md' >
       <Typography variant='h4' fontWeight='bold' py={4}>
         Recent Posts
       </Typography>
