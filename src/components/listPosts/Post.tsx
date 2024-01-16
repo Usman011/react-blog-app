@@ -28,9 +28,10 @@ const Post: React.FC<IPost> = ({ content, title, user, status }) => {
           <Typography variant='h4' fontWeight='bold' mt={4}>
             {title}
           </Typography>
+          <Typography variant='body1' mt={3}>{content}</Typography>
+
         </Box>
 
-        <Typography variant='body1'>{content}</Typography>
         <Flex alignItems='center' gap={2}>
           <AccountCircleIcon sx={{ color: '#999999', fontSize: '35px' }} />
           <Typography

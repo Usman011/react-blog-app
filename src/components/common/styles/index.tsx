@@ -22,9 +22,9 @@ export const WrapperCentered = styled(Box)(() => ({
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',
-  minHeight: '100vh',
-  height: '100vh',
-  width: '100vw'
+  minHeight: 'calc(100vh - 70px)',
+  height: '100%',
+  margin: '0rem 1rem'
 }))
 
 export const StyledLink = styled(Link)(() => ({

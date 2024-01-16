@@ -1,3 +1,4 @@
 export const alertMessage = {
-  userCreated: 'User has been created successfully'
+  userCreated: 'User has been created successfully',
+  postCreated: 'Post has been created successfully'
 }

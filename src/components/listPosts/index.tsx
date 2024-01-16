@@ -2,9 +2,10 @@ import { Box, Skeleton } from '@mui/material'
 import Post from './Post'
 import { usePaginatedPostsQuery } from '__generated/graphql'
 import { useState } from 'react'
+import PaginationButton from 'components/common/PaginationButton'
 
 const ListPosts = () => {
-  const itemsPerPage = 10
+  const itemsPerPage = 5
   const [page, setPage] = useState(1)
   const { loading, data } = usePaginatedPostsQuery({
     variables: {
@@ -12,6 +13,10 @@ const ListPosts = () => {
       page
     }
   })
+
+  const handleChange = (page: number) => {
+    setPage(page)
+  }
 
   if (loading) {
     return (
@@ -22,7 +27,7 @@ const ListPosts = () => {
   }
 
   return (
-    <Box>
+    <Box pb={6}>
       {data?.paginatedPosts.map(item => {
         return (
           <Post
@@ -35,6 +40,9 @@ const ListPosts = () => {
           />
         )
       })}
+      <Box mt={4}>
+        <PaginationButton currentPage={page} onChange={handleChange} isLoading={loading} />
+      </Box>
     </Box>
   )
 }
