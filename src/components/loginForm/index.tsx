@@ -15,9 +15,9 @@ import { ROUTES } from 'types/routes.types'
 const LoginForm = () => {
   const navigate = useNavigate()
   const [mutation, { loading }] = useLoginMutation({
-    onCompleted: res => {
-      Cookies.set(COOKIES.TOKEN, res.login.token, { expires: 1 })
-      Cookies.set(COOKIES.EMAIL, res.login.user.email, { expires: 1 })
+    onCompleted: response => {
+      Cookies.set(COOKIES.TOKEN, response.login.token, { expires: 1 })
+      Cookies.set(COOKIES.EMAIL, response.login.user.email, { expires: 1 })
       navigate(ROUTES.HOME)
     }
   })

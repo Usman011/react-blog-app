@@ -10,7 +10,7 @@ export function useViewports(): Viewports {
   const theme = useTheme()
 
   const isDesktop = useMediaQuery(theme.breakpoints.up('xl'))
-  const isLaptop = useMediaQuery(theme.breakpoints.between('md', 'xl'))
+  const isLaptop = useMediaQuery(theme.breakpoints.up('md'))
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
 
   return {

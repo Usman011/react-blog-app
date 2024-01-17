@@ -1,9 +1,10 @@
 import useAuthStore, { IUser, authInitialState } from 'stores/auth'
 import Cookies from 'js-cookie'
 import { COOKIES } from 'types/form.types'
+
 export const setUser = (formData: IUser) => {
   useAuthStore.setState(() => ({
-    ...formData,
+    user: { ...formData },
     isAuthenticated: true
   }))
 }

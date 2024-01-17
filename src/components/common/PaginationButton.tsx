@@ -1,15 +1,13 @@
+import { FC } from 'react'
 import { Button, ButtonGroup } from '@mui/material'
+import { INPUT_VARIANTS } from 'types/form.types'
 
 interface PaginationButtonProps {
   currentPage: number
   onChange: (page: number) => void
   isLoading: boolean
 }
-const PaginationButton: React.FC<PaginationButtonProps> = ({
-  currentPage,
-  onChange,
-  isLoading
-}) => {
+const PaginationButton: FC<PaginationButtonProps> = ({ currentPage, onChange, isLoading }) => {
   const handlePrevClick = () => {
     onChange(currentPage - 1)
   }
@@ -18,7 +16,7 @@ const PaginationButton: React.FC<PaginationButtonProps> = ({
     onChange(currentPage + 1)
   }
   return (
-    <ButtonGroup variant='outlined' aria-label='outlined button group'>
+    <ButtonGroup variant={INPUT_VARIANTS.OUTLINED} aria-label='outlined button group'>
       <Button disabled={currentPage === 1 || isLoading} onClick={handlePrevClick}>
         Prev
       </Button>

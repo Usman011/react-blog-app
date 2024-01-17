@@ -1,4 +1,3 @@
-import * as React from 'react'
 import IconButton from '@mui/material/IconButton'
 import InputAdornment from '@mui/material/InputAdornment'
 import Visibility from '@mui/icons-material/Visibility'
@@ -6,6 +5,7 @@ import VisibilityOff from '@mui/icons-material/VisibilityOff'
 import { TextField } from '@mui/material'
 import { Control, Controller, FieldValues, Path, PathValue } from 'react-hook-form'
 import {  INPUT_TYPES, INPUT_VARIANTS } from 'types/form.types'
+import { useState } from 'react'
 
 export type InputFieldProps<TFieldValues extends FieldValues> = {
   name: Path<TFieldValues>
@@ -28,7 +28,7 @@ const InputField = <TFieldValues extends FieldValues = FieldValues>({
   label,
   multiline
 }: InputFieldProps<TFieldValues>) => {
-  const [showPassword, setShowPassword] = React.useState(type === INPUT_TYPES.PASSWORD ? true : false)
+  const [showPassword, setShowPassword] = useState(type === INPUT_TYPES.PASSWORD ? true : false)
 
   const handleClickShowPassword = () => {
     if (type === INPUT_TYPES.PASSWORD) {
