@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import { FC, useEffect } from 'react'
 import { Outlet, useNavigate } from 'react-router'
 
 import { useSnackbar } from 'notistack'
@@ -13,7 +13,7 @@ import { Box } from '@mui/material'
 import Navbar from 'components/common/navbar'
 import FullScreenLoader from 'components/common/FullScreenLoader'
 
-const AuthLayout: React.FC = () => {
+const AuthLayout: FC = () => {
   const auth: AuthState = useAuthStore()
   const { enqueueSnackbar } = useSnackbar()
   const navigate = useNavigate()
@@ -49,10 +49,11 @@ const AuthLayout: React.FC = () => {
   return (
     <Box>
       <Navbar />
+
       <Box
         sx={{
           minHeight: 'calc(100vh - 175px)',
-          height: '100%',
+          height: '100%'
         }}
       >
         <Outlet />

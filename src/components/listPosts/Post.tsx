@@ -1,13 +1,15 @@
-import React from 'react'
+import { FC } from 'react'
+
 import { Box } from '@mui/material'
 import Typography from '@mui/material/Typography'
 import AccountCircleIcon from '@mui/icons-material/AccountCircle'
-import { useViewports } from 'helpers/viewports'
-import { CustomTag, Flex } from 'components/common/styles'
-import { IPost } from 'types/component.types'
-import { Card, ContentBox, StyledImg } from './styles'
 
-const Post: React.FC<IPost> = ({ content, title, user, status }) => {
+import { CustomTag, Flex } from 'components/common/styles'
+import { Card, ContentBox, StyledImg } from './styles'
+import { useViewports } from 'helpers/viewports'
+import { IPost } from 'types/component.types'
+
+const Post: FC<IPost> = ({ content, title, user, status }) => {
   const { isLaptop } = useViewports()
 
   return (
@@ -25,11 +27,12 @@ const Post: React.FC<IPost> = ({ content, title, user, status }) => {
               Travel
             </Typography>
           </CustomTag>
-          <Typography variant='h4' fontWeight='bold' mt={4}>
+          <Typography variant='h4' fontWeight='bold' mt={1}>
             {title}
           </Typography>
-          <Typography variant='body1' mt={3}>{content}</Typography>
-
+          <Typography variant='body1' mt={isLaptop ? 2 : 1}>
+            {content}
+          </Typography>
         </Box>
 
         <Flex alignItems='center' gap={2}>

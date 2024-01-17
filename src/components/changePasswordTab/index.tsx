@@ -54,7 +54,7 @@ const ChangePasswordTab = () => {
           <Box mt={4}>
             <LoadingButton
               fullWidth
-              label='Create Post'
+              label='Change Password'
               loading={loading}
               type={BUTTON_TYPES.SUBMIT}
             />

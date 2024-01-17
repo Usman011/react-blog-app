@@ -50,9 +50,28 @@ export const CustomTag = styled(Box)(() => ({
   display: 'inline-block'
 }))
 
-
 export const Flex: React.FC<BoxProps> = props => <Box display='flex' {...props} />
 
 export const Centered: React.FC<BoxProps> = props => (
   <Flex justifyContent='center' alignItems='center' {...props} />
 )
+
+export const styledLogo = {
+  mr: 2,
+  display: { xs: 'block', md: 'flex' },
+  fontFamily: 'monospace',
+  fontWeight: 700,
+  letterSpacing: '.3rem',
+  color: '#fff',
+  textDecoration: 'none'
+}
+
+export const fullScreenSpinner = {
+  mr: 2,
+  display: { xs: 'block', md: 'flex' },
+  fontFamily: 'monospace',
+  fontWeight: 700,
+  letterSpacing: '.3rem',
+  color: '#fff',
+  textDecoration: 'none'
+}

@@ -4,15 +4,18 @@ import { User } from '__generated/graphql'
 
 export type IUser = Omit<User, 'comments' | 'posts' | 'password'>
 
-export interface AuthState extends IUser {
+export interface AuthState {
+  user: IUser
   isAuthenticated: boolean
 }
 
 const authInitialState: AuthState = {
-  email: '',
-  firstName: '',
-  id: -1,
-  lastName: '',
+  user: {
+    email: '',
+    firstName: '',
+    id: -1,
+    lastName: ''
+  },
   isAuthenticated: false
 }
 

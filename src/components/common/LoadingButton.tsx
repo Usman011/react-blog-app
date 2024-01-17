@@ -1,5 +1,5 @@
 import Button from '@mui/material/Button'
-import { CircularProgress } from '@mui/material'
+import { Box, CircularProgress } from '@mui/material'
 import { BUTTON_TYPES, INPUT_VARIANTS, COLORS, SIZES } from 'types/form.types'
 
 interface LoadingButtonProps {
@@ -21,6 +21,7 @@ const LoadingButton: React.FC<LoadingButtonProps> = ({
   fullWidth,
   loadingText
 }) => {
+  
   const handleClick = () => {
     if (!loading && onClick) {
       onClick()
@@ -36,7 +37,7 @@ const LoadingButton: React.FC<LoadingButtonProps> = ({
       disabled={loading || false}
       onClick={handleClick}
       size={SIZES.LARGE}
-      startIcon={loading && <CircularProgress size={20} color='inherit' />}
+      startIcon={loading ? <CircularProgress size={20} color='inherit' /> : <Box />}
     >
       {loading ? loadingText || 'Loading...' : label}
     </Button>

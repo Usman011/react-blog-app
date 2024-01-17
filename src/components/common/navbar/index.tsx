@@ -1,4 +1,5 @@
-import * as React from 'react'
+import { MouseEvent, useState } from 'react'
+
 import AppBar from '@mui/material/AppBar'
 import Box from '@mui/material/Box'
 import Toolbar from '@mui/material/Toolbar'
@@ -8,18 +9,19 @@ import Menu from '@mui/material/Menu'
 import Container from '@mui/material/Container'
 import Avatar from '@mui/material/Avatar'
 import Button from '@mui/material/Button'
-import Tooltip from '@mui/material/Tooltip'
 import MenuItem from '@mui/material/MenuItem'
+
 import useAuthStore, { logoutUser } from 'stores/auth'
-import { Centered, Flex, LightStyledLink, StyledLink } from '../styles'
 import { INPUT_VARIANTS } from 'types/form.types'
 import { ROUTES } from 'types/routes.types'
+import { anchorOrigin } from 'constants/component'
+import { Centered, Flex, LightStyledLink, StyledLink, styledLogo } from '../styles'
 
 function ResponsiveAppBar() {
   const auth = useAuthStore()
-  const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null)
+  const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null)
 
-  const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
+  const handleOpenUserMenu = (event: MouseEvent<HTMLElement>) => {
     setAnchorElUser(event.currentTarget)
   }
 
@@ -29,22 +31,11 @@ function ResponsiveAppBar() {
 
   return (
     <AppBar position='static'>
-      <Container maxWidth='lg' sx={{ height: '65px' }}>
+      <Container maxWidth='xl' sx={{ height: '65px' }}>
         <Toolbar disableGutters>
           <Centered>
             <StyledLink to={ROUTES.HOME}>
-              <Typography
-                variant='h3'
-                sx={{
-                  mr: 2,
-                  display: { xs: 'block', md: 'flex' },
-                  fontFamily: 'monospace',
-                  fontWeight: 700,
-                  letterSpacing: '.3rem',
-                  color: '#fff',
-                  textDecoration: 'none'
-                }}
-              >
+              <Typography variant='h3' sx={styledLogo}>
                 BLOG
               </Typography>
             </StyledLink>
@@ -60,32 +51,26 @@ function ResponsiveAppBar() {
                 </Button>
               </LightStyledLink>
               <Box sx={{ flexGrow: 0 }}>
-                <Tooltip title='Open settings'>
-                  <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                    <Avatar alt='Remy Sharp' src='/static/images/avatar/2.jpg' />
-                  </IconButton>
-                </Tooltip>
+                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                  <Avatar alt='user profile' />
+                </IconButton>
                 <Menu
                   sx={{ mt: '45px' }}
                   id='menu-appbar'
                   anchorEl={anchorElUser}
-                  anchorOrigin={{
-                    vertical: 'top',
-                    horizontal: 'right'
-                  }}
+                  anchorOrigin={anchorOrigin}
                   keepMounted
-                  transformOrigin={{
-                    vertical: 'top',
-                    horizontal: 'right'
-                  }}
+                  transformOrigin={anchorOrigin}
                   open={Boolean(anchorElUser)}
                   onClose={handleCloseUserMenu}
                 >
-                  <StyledLink to={ROUTES.PROFILE_SETTING}>
-                    <MenuItem>
-                      <Typography textAlign='center'>Profile Setting</Typography>
-                    </MenuItem>
-                  </StyledLink>
+                  <MenuItem
+                    component={LightStyledLink}
+                    to={ROUTES.PROFILE_SETTING}
+                    onClick={handleCloseUserMenu}
+                  >
+                    <Typography textAlign='center'>Profile Setting</Typography>
+                  </MenuItem>
 
                   <MenuItem onClick={logoutUser}>
                     <Typography textAlign='center'>Logout</Typography>
@@ -95,16 +80,23 @@ function ResponsiveAppBar() {
             </Flex>
           ) : (
             <Flex gap={2}>
-              <LightStyledLink to={ROUTES.LOGIN}>
-                <Button variant={INPUT_VARIANTS.OUTLINED} color='inherit'>
-                  Login
-                </Button>
-              </LightStyledLink>
-              <LightStyledLink to={ROUTES.SIGNUP}>
-                <Button variant={INPUT_VARIANTS.OUTLINED} color='inherit'>
-                  Signup
-                </Button>
-              </LightStyledLink>
+              <Button
+                component={LightStyledLink}
+                to={ROUTES.LOGIN}
+                variant={INPUT_VARIANTS.OUTLINED}
+                color='inherit'
+              >
+                Login
+              </Button>
+
+              <Button
+                component={LightStyledLink}
+                to={ROUTES.SIGNUP}
+                variant={INPUT_VARIANTS.OUTLINED}
+                color='inherit'
+              >
+                Signup
+              </Button>
             </Flex>
           )}
         </Toolbar>

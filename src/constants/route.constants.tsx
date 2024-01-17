@@ -17,11 +17,11 @@ export const router = createBrowserRouter([
     element: <Login />
   },
   {
-    path: ROUTES.AUTH,
+    path: ROUTES.CREATE_POST,
     element: <AuthLayout />,
     children: [
       {
-        path: ROUTES.CREATE_POST,
+        index: true,
         element: <CreatePost />
       },
       {
@@ -35,7 +35,7 @@ export const router = createBrowserRouter([
     element: <PublicLayout />,
     children: [
       {
-        path: ROUTES.HOME,
+        index: true,
         element: <Home />
       }
     ]

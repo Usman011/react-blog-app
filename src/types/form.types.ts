@@ -64,8 +64,6 @@ export enum LABELS {
   TITLE = 'Title',
   PREV_PASSWORD = 'Previous Password',
   NEW_PASSWORD = 'New  Password'
-
-
 }
 
 export enum INPUT_TYPES {
