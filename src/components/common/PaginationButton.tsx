@@ -6,8 +6,14 @@ interface PaginationButtonProps {
   currentPage: number
   onChange: (page: number) => void
   isLoading: boolean
+  hasMore: boolean
 }
-const PaginationButton: FC<PaginationButtonProps> = ({ currentPage, onChange, isLoading }) => {
+const PaginationButton: FC<PaginationButtonProps> = ({
+  currentPage,
+  onChange,
+  isLoading,
+  hasMore
+}) => {
   const handlePrevClick = () => {
     onChange(currentPage - 1)
   }
@@ -21,7 +27,7 @@ const PaginationButton: FC<PaginationButtonProps> = ({ currentPage, onChange, is
         Prev
       </Button>
       <Button>{currentPage}</Button>
-      <Button disabled={isLoading} onClick={handleNextClick}>
+      <Button disabled={isLoading || !hasMore} onClick={handleNextClick}>
         Next
       </Button>
     </ButtonGroup>

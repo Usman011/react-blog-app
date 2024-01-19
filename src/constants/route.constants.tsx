@@ -6,6 +6,7 @@ import { AuthLayout, PublicLayout } from 'components/layout'
 import { ROUTES } from 'types/routes.types'
 import CreatePost from 'pages/createPost'
 import ProfileSetting from 'pages/profileSetting'
+import ViewPost from 'pages/viewPost'
 
 export const router = createBrowserRouter([
   {
@@ -17,11 +18,11 @@ export const router = createBrowserRouter([
     element: <Login />
   },
   {
-    path: ROUTES.CREATE_POST,
+    path: ROUTES.AUTH,
     element: <AuthLayout />,
     children: [
       {
-        index: true,
+        path: ROUTES.CREATE_POST,
         element: <CreatePost />
       },
       {
@@ -37,6 +38,10 @@ export const router = createBrowserRouter([
       {
         index: true,
         element: <Home />
+      },
+      {
+        path: ROUTES.VIEW_POST,
+        element: <ViewPost />
       }
     ]
   }

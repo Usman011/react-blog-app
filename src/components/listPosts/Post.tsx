@@ -8,19 +8,34 @@ import { CustomTag, Flex } from 'components/common/styles'
 import { Card, ContentBox, StyledImg } from './styles'
 import { useViewports } from 'helpers/viewports'
 import { IPost } from 'types/component.types'
+import { useNavigate } from 'react-router'
 
-const Post: FC<IPost> = ({ content, title, user, status }) => {
-  const { isLaptop } = useViewports()
+const Post: FC<IPost> = ({ content, title, user, status, id }) => {
+  const { isLaptop, isDesktop } = useViewports()
+  const navigate = useNavigate()
+
+  const truncateString = (inputString: string, wordLimit: number) => {
+    const words = inputString.split(' ')
+
+    if (words.length > wordLimit) {
+      words.length = wordLimit
+      const truncatedString = words.join(' ')
+      return truncatedString + '...'
+    }
+
+    return inputString
+  }
 
   return (
-    <Card isLaptop={isLaptop}>
+    <Card isVertical={isLaptop || isDesktop}>
       <StyledImg
+        onClick={() => navigate(`/post/${id}`)}
         src={`https://source.unsplash.com/random/200x200?sig=${
           Math.floor(Math.random() * 100) + 1
         }`}
-        isLaptop={isLaptop}
+        isVertical={isLaptop || isDesktop}
       />
-      <ContentBox isLaptop={isLaptop}>
+      <ContentBox isVertical={isLaptop || isDesktop}>
         <Box>
           <CustomTag>
             <Typography variant='body2' textAlign='center'>
@@ -31,7 +46,7 @@ const Post: FC<IPost> = ({ content, title, user, status }) => {
             {title}
           </Typography>
           <Typography variant='body1' mt={isLaptop ? 2 : 1}>
-            {content}
+            {truncateString(content, 40)}
           </Typography>
         </Box>
 

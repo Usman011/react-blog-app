@@ -2,10 +2,13 @@ import { Typography } from '@mui/material'
 import LoginForm from 'components/loginForm'
 import { ROUTES } from 'types/routes.types'
 import { Flex, FormBox, StyledLink, WrapperCentered } from 'components/common/styles'
+import { useEffect } from 'react'
+import { ALERT } from 'components/notistack'
 
 const Login = () => {
-
-  console.log(import.meta.env.VITE_GRAPHQL_URL)
+  useEffect(() => {
+    ALERT.success('Hello')
+  }, [])
   return (
     <WrapperCentered>
       <FormBox>

@@ -17,7 +17,6 @@ const LoginForm = () => {
   const [mutation, { loading }] = useLoginMutation({
     onCompleted: response => {
       Cookies.set(COOKIES.TOKEN, response.login.token, { expires: 1 })
-      Cookies.set(COOKIES.EMAIL, response.login.user.email, { expires: 1 })
       navigate(ROUTES.HOME)
     }
   })

@@ -26,7 +26,7 @@ const SignupForm = () => {
       enqueueSnackbar(alertMessage.userCreated, {
         variant: ALERT_TYPE.SUCCESS
       })
-      // navigate(ROUTES.LOGIN)
+      navigate(ROUTES.LOGIN)
     }
   })
 

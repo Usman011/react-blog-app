@@ -4,7 +4,6 @@ import { Outlet, useNavigate } from 'react-router'
 import { useSnackbar } from 'notistack'
 import Cookies from 'js-cookie'
 
-import Footer from 'components/common/Footer'
 import useAuthStore, { AuthState, setUser } from 'stores/auth'
 import { ALERT_TYPE, COOKIES, ERROR_TYPE } from 'types/form.types'
 import { ROUTES } from 'types/routes.types'
@@ -28,11 +27,7 @@ const AuthLayout: FC = () => {
   useEffect(() => {
     if (Cookies.get(COOKIES.TOKEN)) {
       if (!auth.isAuthenticated) {
-        getUser({
-          variables: {
-            email: Cookies.get(COOKIES.EMAIL) || ''
-          }
-        })
+        getUser()
       }
     } else {
       enqueueSnackbar(ERROR_TYPE.UNAUTHORIZED, {
@@ -58,7 +53,6 @@ const AuthLayout: FC = () => {
       >
         <Outlet />
       </Box>
-      <Footer />
     </Box>
   )
 }

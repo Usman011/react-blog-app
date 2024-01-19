@@ -1,0 +1,158 @@
+mutation CreatePost($data: postInput!) {
+  createPost(data: $data) {
+    message
+    id
+    success
+  }
+}
+
+query GetPost($getPostId: Int!) {
+  getPost(id: $getPostId) {
+    content
+    id
+    status
+    title
+    user {
+      email
+      firstName
+      id
+      lastName
+    }
+    comments {
+      text
+      id
+      user {
+        email
+        firstName
+        id
+        lastName
+      }
+      replies {
+        text
+        id
+        user {
+          email
+          firstName
+          lastName
+          id
+        }
+      }
+    }
+  }
+}
+
+mutation CreateComment($data: CommentInput!) {
+  createComment(data: $data) {
+    id
+    text
+    user {
+      email
+      firstName
+      id
+      lastName
+    }
+    replies {
+      text
+      id
+      user {
+        email
+        firstName
+        id
+        lastName
+      }
+    }
+  }
+}
+
+query GetComment($postId: Int!, $itemsPerPage: Int!, $page: Int!) {
+  getComment(postId: $postId, itemsPerPage: $itemsPerPage, page: $page) {
+    total
+    comments {
+      text
+      user {
+        email
+        firstName
+        lastName
+        id
+      }
+      id
+      replies {
+        id
+        text
+        user {
+          email
+          firstName
+          lastName
+          id
+        }
+      }
+    }
+  }
+}
+
+query GetRepliesOfComment($itemsPerPage: Int!, $page: Int!, $commentId: Int!) {
+  getRepliesOfComment(itemsPerPage: $itemsPerPage, page: $page, commentId: $commentId) {
+    total
+    comments {
+      id
+      text
+      user {
+        email
+        firstName
+        lastName
+        id
+      }
+      replies {
+        user {
+          email
+          firstName
+          id
+          lastName
+        }
+        text
+        id
+      }
+    }
+  }
+}
+
+mutation AddReplyToComment($data: ReplyInput!) {
+  addReplyToComment(data: $data) {
+    id
+    text
+    user {
+      email
+      firstName
+      id
+      lastName
+    }
+    replies {
+      text
+      id
+      user {
+        email
+        firstName
+        id
+        lastName
+      }
+    }
+  }
+}
+
+query PaginatedPosts($itemsPerPage: Int!, $page: Int!) {
+  paginatedPosts(itemsPerPage: $itemsPerPage, page: $page) {
+    total
+    posts {
+      content
+      id
+      status
+      title
+      user {
+        email
+        firstName
+        id
+        lastName
+      }
+    }
+  }
+}

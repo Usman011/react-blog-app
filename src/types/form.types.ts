@@ -4,7 +4,6 @@ export interface ISignupForm extends UserInput {
   confirmPassword: string
 }
 
-export type IPostForm = Pick<Post, 'title' | 'content'>
 
 export enum ALERT_TYPE {
   ERROR = 'error',

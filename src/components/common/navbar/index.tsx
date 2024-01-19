@@ -31,7 +31,7 @@ function ResponsiveAppBar() {
 
   return (
     <AppBar position='static'>
-      <Container maxWidth='xl' sx={{ height: '65px' }}>
+      <Container maxWidth='lg' sx={{ height: '65px' }}>
         <Toolbar disableGutters>
           <Centered>
             <StyledLink to={ROUTES.HOME}>

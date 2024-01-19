@@ -3,7 +3,10 @@ import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 
 export interface MobileProps {
-  isLaptop: boolean
+  isLaptop?: boolean
+  isMobile?: boolean
+  isTablet?: boolean
+  isDesktop?: boolean
 }
 
 export const FormBox = styled(Box)(() => ({

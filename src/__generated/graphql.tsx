@@ -32,6 +32,12 @@ export type CommentInput = {
   text: Scalars['String']['input'];
 };
 
+export type CommentsResponse = {
+  __typename?: 'CommentsResponse';
+  comments: Array<Comment>;
+  total: Scalars['Int']['output'];
+};
+
 export type LoginInput = {
   email: Scalars['String']['input'];
   password: Scalars['String']['input'];
@@ -103,6 +109,12 @@ export type MutationUpdatePostArgs = {
   id: Scalars['Int']['input'];
 };
 
+export type PaginatedPostsResponse = {
+  __typename?: 'PaginatedPostsResponse';
+  posts: Array<Post>;
+  total: Scalars['Int']['output'];
+};
+
 export type Post = {
   __typename?: 'Post';
   comments?: Maybe<Array<Comment>>;
@@ -126,13 +138,13 @@ export enum PostStatus {
 export type Query = {
   __typename?: 'Query';
   Comment: Comment;
-  getComment: Array<Comment>;
+  getComment: CommentsResponse;
   getPost: Post;
-  getRepliesOfComment: Array<Comment>;
+  getRepliesOfComment: CommentsResponse;
   hello: Scalars['String']['output'];
   listComments: Array<Comment>;
   listPosts: Array<Post>;
-  paginatedPosts: Array<Post>;
+  paginatedPosts: PaginatedPostsResponse;
   search: Array<Post>;
   user: User;
 };
@@ -172,11 +184,6 @@ export type QuerySearchArgs = {
   input: Scalars['String']['input'];
 };
 
-
-export type QueryUserArgs = {
-  email: Scalars['String']['input'];
-};
-
 export type ReplyInput = {
   commentId?: InputMaybe<Scalars['Int']['input']>;
   postId?: InputMaybe<Scalars['Int']['input']>;
@@ -208,6 +215,11 @@ export type UserInput = {
   password: Scalars['String']['input'];
 };
 
+export type GetUserQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetUserQuery = { __typename?: 'Query', user: { __typename?: 'User', email: string, firstName: string, id: number, lastName: string } };
+
 export type CreateUserMutationVariables = Exact<{
   createUser: UserInput;
 }>;
@@ -222,13 +234,6 @@ export type LoginMutationVariables = Exact<{
 
 export type LoginMutation = { __typename?: 'Mutation', login: { __typename?: 'LoginResponse', token: string, user: { __typename?: 'User', email: string, firstName: string, id: number, lastName: string } } };
 
-export type GetUserQueryVariables = Exact<{
-  email: Scalars['String']['input'];
-}>;
-
-
-export type GetUserQuery = { __typename?: 'Query', user: { __typename?: 'User', email: string, id: number, firstName: string, lastName: string } };
-
 export type CreatePostMutationVariables = Exact<{
   data: PostInput;
 }>;
@@ -236,15 +241,96 @@ export type CreatePostMutationVariables = Exact<{
 
 export type CreatePostMutation = { __typename?: 'Mutation', createPost: { __typename?: 'SuccessResponse', message?: string | null, id?: number | null, success?: boolean | null } };
 
+export type GetPostQueryVariables = Exact<{
+  getPostId: Scalars['Int']['input'];
+}>;
+
+
+export type GetPostQuery = { __typename?: 'Query', getPost: { __typename?: 'Post', content: string, id: number, status: PostStatus, title: string, user?: { __typename?: 'User', email: string, firstName: string, id: number, lastName: string } | null, comments?: Array<{ __typename?: 'Comment', text?: string | null, id: number, user: { __typename?: 'User', email: string, firstName: string, id: number, lastName: string }, replies?: Array<{ __typename?: 'Comment', text?: string | null, id: number, user: { __typename?: 'User', email: string, firstName: string, lastName: string, id: number } }> | null }> | null } };
+
+export type CreateCommentMutationVariables = Exact<{
+  data: CommentInput;
+}>;
+
+
+export type CreateCommentMutation = { __typename?: 'Mutation', createComment: { __typename?: 'Comment', id: number, text?: string | null, user: { __typename?: 'User', email: string, firstName: string, id: number, lastName: string }, replies?: Array<{ __typename?: 'Comment', text?: string | null, id: number, user: { __typename?: 'User', email: string, firstName: string, id: number, lastName: string } }> | null } };
+
+export type GetCommentQueryVariables = Exact<{
+  postId: Scalars['Int']['input'];
+  itemsPerPage: Scalars['Int']['input'];
+  page: Scalars['Int']['input'];
+}>;
+
+
+export type GetCommentQuery = { __typename?: 'Query', getComment: { __typename?: 'CommentsResponse', total: number, comments: Array<{ __typename?: 'Comment', text?: string | null, id: number, user: { __typename?: 'User', email: string, firstName: string, lastName: string, id: number }, replies?: Array<{ __typename?: 'Comment', id: number, text?: string | null, user: { __typename?: 'User', email: string, firstName: string, lastName: string, id: number } }> | null }> } };
+
+export type GetRepliesOfCommentQueryVariables = Exact<{
+  itemsPerPage: Scalars['Int']['input'];
+  page: Scalars['Int']['input'];
+  commentId: Scalars['Int']['input'];
+}>;
+
+
+export type GetRepliesOfCommentQuery = { __typename?: 'Query', getRepliesOfComment: { __typename?: 'CommentsResponse', total: number, comments: Array<{ __typename?: 'Comment', id: number, text?: string | null, user: { __typename?: 'User', email: string, firstName: string, lastName: string, id: number }, replies?: Array<{ __typename?: 'Comment', text?: string | null, id: number, user: { __typename?: 'User', email: string, firstName: string, id: number, lastName: string } }> | null }> } };
+
+export type AddReplyToCommentMutationVariables = Exact<{
+  data: ReplyInput;
+}>;
+
+
+export type AddReplyToCommentMutation = { __typename?: 'Mutation', addReplyToComment: { __typename?: 'Comment', id: number, text?: string | null, user: { __typename?: 'User', email: string, firstName: string, id: number, lastName: string }, replies?: Array<{ __typename?: 'Comment', text?: string | null, id: number, user: { __typename?: 'User', email: string, firstName: string, id: number, lastName: string } }> | null } };
+
 export type PaginatedPostsQueryVariables = Exact<{
   itemsPerPage: Scalars['Int']['input'];
   page: Scalars['Int']['input'];
 }>;
 
 
-export type PaginatedPostsQuery = { __typename?: 'Query', paginatedPosts: Array<{ __typename?: 'Post', content: string, id: number, status: PostStatus, title: string, user?: { __typename?: 'User', email: string, firstName: string, id: number, lastName: string } | null }> };
+export type PaginatedPostsQuery = { __typename?: 'Query', paginatedPosts: { __typename?: 'PaginatedPostsResponse', total: number, posts: Array<{ __typename?: 'Post', content: string, id: number, status: PostStatus, title: string, user?: { __typename?: 'User', email: string, firstName: string, id: number, lastName: string } | null }> } };
 
 
+export const GetUserDocument = gql`
+    query getUser {
+  user {
+    email
+    firstName
+    id
+    lastName
+  }
+}
+    `;
+
+/**
+ * __useGetUserQuery__
+ *
+ * To run a query within a React component, call `useGetUserQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetUserQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetUserQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetUserQuery(baseOptions?: Apollo.QueryHookOptions<GetUserQuery, GetUserQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetUserQuery, GetUserQueryVariables>(GetUserDocument, options);
+      }
+export function useGetUserLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetUserQuery, GetUserQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetUserQuery, GetUserQueryVariables>(GetUserDocument, options);
+        }
+export function useGetUserSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<GetUserQuery, GetUserQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetUserQuery, GetUserQueryVariables>(GetUserDocument, options);
+        }
+export type GetUserQueryHookResult = ReturnType<typeof useGetUserQuery>;
+export type GetUserLazyQueryHookResult = ReturnType<typeof useGetUserLazyQuery>;
+export type GetUserSuspenseQueryHookResult = ReturnType<typeof useGetUserSuspenseQuery>;
+export type GetUserQueryResult = Apollo.QueryResult<GetUserQuery, GetUserQueryVariables>;
 export const CreateUserDocument = gql`
     mutation CreateUser($createUser: UserInput!) {
   register(createUser: $createUser) {
@@ -323,49 +409,6 @@ export function useLoginMutation(baseOptions?: Apollo.MutationHookOptions<LoginM
 export type LoginMutationHookResult = ReturnType<typeof useLoginMutation>;
 export type LoginMutationResult = Apollo.MutationResult<LoginMutation>;
 export type LoginMutationOptions = Apollo.BaseMutationOptions<LoginMutation, LoginMutationVariables>;
-export const GetUserDocument = gql`
-    query getUser($email: String!) {
-  user(email: $email) {
-    email
-    id
-    firstName
-    lastName
-  }
-}
-    `;
-
-/**
- * __useGetUserQuery__
- *
- * To run a query within a React component, call `useGetUserQuery` and pass it any options that fit your needs.
- * When your component renders, `useGetUserQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useGetUserQuery({
- *   variables: {
- *      email: // value for 'email'
- *   },
- * });
- */
-export function useGetUserQuery(baseOptions: Apollo.QueryHookOptions<GetUserQuery, GetUserQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<GetUserQuery, GetUserQueryVariables>(GetUserDocument, options);
-      }
-export function useGetUserLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetUserQuery, GetUserQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<GetUserQuery, GetUserQueryVariables>(GetUserDocument, options);
-        }
-export function useGetUserSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<GetUserQuery, GetUserQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useSuspenseQuery<GetUserQuery, GetUserQueryVariables>(GetUserDocument, options);
-        }
-export type GetUserQueryHookResult = ReturnType<typeof useGetUserQuery>;
-export type GetUserLazyQueryHookResult = ReturnType<typeof useGetUserLazyQuery>;
-export type GetUserSuspenseQueryHookResult = ReturnType<typeof useGetUserSuspenseQuery>;
-export type GetUserQueryResult = Apollo.QueryResult<GetUserQuery, GetUserQueryVariables>;
 export const CreatePostDocument = gql`
     mutation CreatePost($data: postInput!) {
   createPost(data: $data) {
@@ -401,9 +444,9 @@ export function useCreatePostMutation(baseOptions?: Apollo.MutationHookOptions<C
 export type CreatePostMutationHookResult = ReturnType<typeof useCreatePostMutation>;
 export type CreatePostMutationResult = Apollo.MutationResult<CreatePostMutation>;
 export type CreatePostMutationOptions = Apollo.BaseMutationOptions<CreatePostMutation, CreatePostMutationVariables>;
-export const PaginatedPostsDocument = gql`
-    query PaginatedPosts($itemsPerPage: Int!, $page: Int!) {
-  paginatedPosts(itemsPerPage: $itemsPerPage, page: $page) {
+export const GetPostDocument = gql`
+    query GetPost($getPostId: Int!) {
+  getPost(id: $getPostId) {
     content
     id
     status
@@ -413,6 +456,302 @@ export const PaginatedPostsDocument = gql`
       firstName
       id
       lastName
+    }
+    comments {
+      text
+      id
+      user {
+        email
+        firstName
+        id
+        lastName
+      }
+      replies {
+        text
+        id
+        user {
+          email
+          firstName
+          lastName
+          id
+        }
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetPostQuery__
+ *
+ * To run a query within a React component, call `useGetPostQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetPostQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetPostQuery({
+ *   variables: {
+ *      getPostId: // value for 'getPostId'
+ *   },
+ * });
+ */
+export function useGetPostQuery(baseOptions: Apollo.QueryHookOptions<GetPostQuery, GetPostQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetPostQuery, GetPostQueryVariables>(GetPostDocument, options);
+      }
+export function useGetPostLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetPostQuery, GetPostQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetPostQuery, GetPostQueryVariables>(GetPostDocument, options);
+        }
+export function useGetPostSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<GetPostQuery, GetPostQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetPostQuery, GetPostQueryVariables>(GetPostDocument, options);
+        }
+export type GetPostQueryHookResult = ReturnType<typeof useGetPostQuery>;
+export type GetPostLazyQueryHookResult = ReturnType<typeof useGetPostLazyQuery>;
+export type GetPostSuspenseQueryHookResult = ReturnType<typeof useGetPostSuspenseQuery>;
+export type GetPostQueryResult = Apollo.QueryResult<GetPostQuery, GetPostQueryVariables>;
+export const CreateCommentDocument = gql`
+    mutation CreateComment($data: CommentInput!) {
+  createComment(data: $data) {
+    id
+    text
+    user {
+      email
+      firstName
+      id
+      lastName
+    }
+    replies {
+      text
+      id
+      user {
+        email
+        firstName
+        id
+        lastName
+      }
+    }
+  }
+}
+    `;
+export type CreateCommentMutationFn = Apollo.MutationFunction<CreateCommentMutation, CreateCommentMutationVariables>;
+
+/**
+ * __useCreateCommentMutation__
+ *
+ * To run a mutation, you first call `useCreateCommentMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateCommentMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createCommentMutation, { data, loading, error }] = useCreateCommentMutation({
+ *   variables: {
+ *      data: // value for 'data'
+ *   },
+ * });
+ */
+export function useCreateCommentMutation(baseOptions?: Apollo.MutationHookOptions<CreateCommentMutation, CreateCommentMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreateCommentMutation, CreateCommentMutationVariables>(CreateCommentDocument, options);
+      }
+export type CreateCommentMutationHookResult = ReturnType<typeof useCreateCommentMutation>;
+export type CreateCommentMutationResult = Apollo.MutationResult<CreateCommentMutation>;
+export type CreateCommentMutationOptions = Apollo.BaseMutationOptions<CreateCommentMutation, CreateCommentMutationVariables>;
+export const GetCommentDocument = gql`
+    query GetComment($postId: Int!, $itemsPerPage: Int!, $page: Int!) {
+  getComment(postId: $postId, itemsPerPage: $itemsPerPage, page: $page) {
+    total
+    comments {
+      text
+      user {
+        email
+        firstName
+        lastName
+        id
+      }
+      id
+      replies {
+        id
+        text
+        user {
+          email
+          firstName
+          lastName
+          id
+        }
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetCommentQuery__
+ *
+ * To run a query within a React component, call `useGetCommentQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetCommentQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetCommentQuery({
+ *   variables: {
+ *      postId: // value for 'postId'
+ *      itemsPerPage: // value for 'itemsPerPage'
+ *      page: // value for 'page'
+ *   },
+ * });
+ */
+export function useGetCommentQuery(baseOptions: Apollo.QueryHookOptions<GetCommentQuery, GetCommentQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetCommentQuery, GetCommentQueryVariables>(GetCommentDocument, options);
+      }
+export function useGetCommentLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetCommentQuery, GetCommentQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetCommentQuery, GetCommentQueryVariables>(GetCommentDocument, options);
+        }
+export function useGetCommentSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<GetCommentQuery, GetCommentQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetCommentQuery, GetCommentQueryVariables>(GetCommentDocument, options);
+        }
+export type GetCommentQueryHookResult = ReturnType<typeof useGetCommentQuery>;
+export type GetCommentLazyQueryHookResult = ReturnType<typeof useGetCommentLazyQuery>;
+export type GetCommentSuspenseQueryHookResult = ReturnType<typeof useGetCommentSuspenseQuery>;
+export type GetCommentQueryResult = Apollo.QueryResult<GetCommentQuery, GetCommentQueryVariables>;
+export const GetRepliesOfCommentDocument = gql`
+    query GetRepliesOfComment($itemsPerPage: Int!, $page: Int!, $commentId: Int!) {
+  getRepliesOfComment(itemsPerPage: $itemsPerPage, page: $page, commentId: $commentId) {
+    total
+    comments {
+      id
+      text
+      user {
+        email
+        firstName
+        lastName
+        id
+      }
+      replies {
+        user {
+          email
+          firstName
+          id
+          lastName
+        }
+        text
+        id
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetRepliesOfCommentQuery__
+ *
+ * To run a query within a React component, call `useGetRepliesOfCommentQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetRepliesOfCommentQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetRepliesOfCommentQuery({
+ *   variables: {
+ *      itemsPerPage: // value for 'itemsPerPage'
+ *      page: // value for 'page'
+ *      commentId: // value for 'commentId'
+ *   },
+ * });
+ */
+export function useGetRepliesOfCommentQuery(baseOptions: Apollo.QueryHookOptions<GetRepliesOfCommentQuery, GetRepliesOfCommentQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetRepliesOfCommentQuery, GetRepliesOfCommentQueryVariables>(GetRepliesOfCommentDocument, options);
+      }
+export function useGetRepliesOfCommentLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetRepliesOfCommentQuery, GetRepliesOfCommentQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetRepliesOfCommentQuery, GetRepliesOfCommentQueryVariables>(GetRepliesOfCommentDocument, options);
+        }
+export function useGetRepliesOfCommentSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<GetRepliesOfCommentQuery, GetRepliesOfCommentQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetRepliesOfCommentQuery, GetRepliesOfCommentQueryVariables>(GetRepliesOfCommentDocument, options);
+        }
+export type GetRepliesOfCommentQueryHookResult = ReturnType<typeof useGetRepliesOfCommentQuery>;
+export type GetRepliesOfCommentLazyQueryHookResult = ReturnType<typeof useGetRepliesOfCommentLazyQuery>;
+export type GetRepliesOfCommentSuspenseQueryHookResult = ReturnType<typeof useGetRepliesOfCommentSuspenseQuery>;
+export type GetRepliesOfCommentQueryResult = Apollo.QueryResult<GetRepliesOfCommentQuery, GetRepliesOfCommentQueryVariables>;
+export const AddReplyToCommentDocument = gql`
+    mutation AddReplyToComment($data: ReplyInput!) {
+  addReplyToComment(data: $data) {
+    id
+    text
+    user {
+      email
+      firstName
+      id
+      lastName
+    }
+    replies {
+      text
+      id
+      user {
+        email
+        firstName
+        id
+        lastName
+      }
+    }
+  }
+}
+    `;
+export type AddReplyToCommentMutationFn = Apollo.MutationFunction<AddReplyToCommentMutation, AddReplyToCommentMutationVariables>;
+
+/**
+ * __useAddReplyToCommentMutation__
+ *
+ * To run a mutation, you first call `useAddReplyToCommentMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useAddReplyToCommentMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [addReplyToCommentMutation, { data, loading, error }] = useAddReplyToCommentMutation({
+ *   variables: {
+ *      data: // value for 'data'
+ *   },
+ * });
+ */
+export function useAddReplyToCommentMutation(baseOptions?: Apollo.MutationHookOptions<AddReplyToCommentMutation, AddReplyToCommentMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<AddReplyToCommentMutation, AddReplyToCommentMutationVariables>(AddReplyToCommentDocument, options);
+      }
+export type AddReplyToCommentMutationHookResult = ReturnType<typeof useAddReplyToCommentMutation>;
+export type AddReplyToCommentMutationResult = Apollo.MutationResult<AddReplyToCommentMutation>;
+export type AddReplyToCommentMutationOptions = Apollo.BaseMutationOptions<AddReplyToCommentMutation, AddReplyToCommentMutationVariables>;
+export const PaginatedPostsDocument = gql`
+    query PaginatedPosts($itemsPerPage: Int!, $page: Int!) {
+  paginatedPosts(itemsPerPage: $itemsPerPage, page: $page) {
+    total
+    posts {
+      content
+      id
+      status
+      title
+      user {
+        email
+        firstName
+        id
+        lastName
+      }
     }
   }
 }

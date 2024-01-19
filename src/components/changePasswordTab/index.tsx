@@ -8,12 +8,9 @@ import LoadingButton from 'components/common/LoadingButton'
 import { useCreatePostMutation } from '__generated/graphql'
 import { useSnackbar } from 'notistack'
 import { alertMessage } from 'constants/alert.constants'
+import { IChangePasswordTab } from 'types/component.types'
 
-interface IChangePasswordTab {
-  prevPassword: string
-  password: string
-  confirmPassword: string
-}
+
 const ChangePasswordTab = () => {
   const { enqueueSnackbar } = useSnackbar()
   const [mutation, { loading }] = useCreatePostMutation({

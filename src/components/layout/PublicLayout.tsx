@@ -9,7 +9,6 @@ import { ALERT_TYPE, COOKIES } from 'types/form.types'
 import { useGetUserLazyQuery } from '__generated/graphql'
 import { setUser } from 'stores/auth'
 import FullScreenLoader from 'components/common/FullScreenLoader'
-import Footer from 'components/common/Footer'
 import Navbar from 'components/common/navbar'
 
 const PublicLayout: FC = () => {
@@ -41,12 +40,11 @@ const PublicLayout: FC = () => {
       <Navbar />
       <Box
         sx={{
-          height: 'calc(100vh - 175px)'
+          height: 'calc(100vh - 175px)',
         }}
       >
         <Outlet />
       </Box>
-      <Footer />
     </div>
   )
 }

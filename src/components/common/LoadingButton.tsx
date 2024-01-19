@@ -1,3 +1,4 @@
+import { FC } from 'react'
 import Button from '@mui/material/Button'
 import { Box, CircularProgress } from '@mui/material'
 import { BUTTON_TYPES, INPUT_VARIANTS, COLORS, SIZES } from 'types/form.types'
@@ -8,38 +9,35 @@ interface LoadingButtonProps {
   onClick?: () => void
   type?: BUTTON_TYPES
   fullWidth?: boolean
-  loadingText?: string
   variant?: INPUT_VARIANTS
+  size?: SIZES
+  color?: COLORS
+  disabled?: boolean
 }
 
-const LoadingButton: React.FC<LoadingButtonProps> = ({
+const LoadingButton: FC<LoadingButtonProps> = ({
   label,
   variant = INPUT_VARIANTS.CONTAINED,
   loading = false,
-  type = BUTTON_TYPES.BUTTON,
-  onClick,
-  fullWidth,
-  loadingText
+  type = BUTTON_TYPES.SUBMIT,
+  onClick = () => {},
+  fullWidth = false,
+  size = SIZES.LARGE,
+  color = COLORS.PRIMARY,
+  disabled
 }) => {
-  
-  const handleClick = () => {
-    if (!loading && onClick) {
-      onClick()
-    }
-  }
-
   return (
     <Button
       variant={variant}
       type={type}
-      color={COLORS.PRIMARY}
+      color={color}
       fullWidth={fullWidth}
-      disabled={loading || false}
-      onClick={handleClick}
-      size={SIZES.LARGE}
+      disabled={disabled || loading}
+      onClick={onClick}
+      size={size}
       startIcon={loading ? <CircularProgress size={20} color='inherit' /> : <Box />}
     >
-      {loading ? loadingText || 'Loading...' : label}
+      {loading ? '' : label}
     </Button>
   )
 }

@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react'
+import React from 'react'
 import Cookies from 'js-cookie'
 import {
   ApolloClient,
@@ -12,10 +12,8 @@ import { onError } from '@apollo/client/link/error'
 import { ALERT_TYPE, COOKIES } from 'types/form.types.ts'
 import { useSnackbar } from 'notistack'
 import { logoutUser } from 'stores/auth'
+import { ApolloWrapperProps } from 'types/component.types'
 
-interface ApolloWrapperProps {
-  children: ReactNode
-}
 const ApolloWrapper: React.FC<ApolloWrapperProps> = ({ children }) => {
   const { enqueueSnackbar } = useSnackbar()
   const httpLink = new HttpLink({ uri: import.meta.env.VITE_GRAPHQL_URL })
