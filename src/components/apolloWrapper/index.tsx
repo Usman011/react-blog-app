@@ -9,43 +9,38 @@ import {
   ApolloProvider
 } from '@apollo/client'
 import { onError } from '@apollo/client/link/error'
-import { ALERT_TYPE, COOKIES } from 'types/form.types.ts'
-import { useSnackbar } from 'notistack'
+import { COOKIES } from 'types/form.types.ts'
 import { logoutUser } from 'stores/auth'
 import { ApolloWrapperProps } from 'types/component.types'
+import { ALERT } from 'components/notistack'
 
-const ApolloWrapper: React.FC<ApolloWrapperProps> = ({ children }) => {
-  const { enqueueSnackbar } = useSnackbar()
-  const httpLink = new HttpLink({ uri: import.meta.env.VITE_GRAPHQL_URL })
+const httpLink = new HttpLink({ uri: import.meta.env.VITE_GRAPHQL_URL })
 
-  const authMiddleware = new ApolloLink((operation, forward) => {
-    operation.setContext(({ headers = {} }) => ({
-      headers: {
-        ...headers,
-        authorization: Cookies.get(COOKIES.TOKEN) || null
-      }
-    }))
-    return forward(operation)
-  })
-
-  const errors = onError(({ graphQLErrors }) => {
-    if (graphQLErrors) {
-      graphQLErrors.map(error => {
-        enqueueSnackbar(`Error: ${error.message}`, {
-          variant: ALERT_TYPE.ERROR
-        })
-        if (error.extensions?.code === 500) {
-          logoutUser()
-        }
-      })
+const authMiddleware = new ApolloLink((operation, forward) => {
+  operation.setContext(({ headers = {} }) => ({
+    headers: {
+      ...headers,
+      authorization: Cookies.get(COOKIES.TOKEN) || null
     }
-  })
+  }))
+  return forward(operation)
+})
 
-  const client = new ApolloClient({
-    cache: new InMemoryCache(),
-    link: from([errors, authMiddleware, httpLink])
-  })
-
+const errors = onError(({ graphQLErrors }) => {
+  if (graphQLErrors) {
+    graphQLErrors.map(error => {
+      ALERT.error(`Error: ${error.message}`)
+      if (error.extensions?.code === 500) {
+        logoutUser()
+      }
+    })
+  }
+})
+export const client = new ApolloClient({
+  cache: new InMemoryCache(),
+  link: from([errors, authMiddleware, httpLink])
+})
+const ApolloWrapper: React.FC<ApolloWrapperProps> = ({ children }) => {
   return <ApolloProvider client={client}>{children}</ApolloProvider>
 }
 

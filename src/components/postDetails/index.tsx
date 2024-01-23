@@ -1,4 +1,4 @@
-import { Box, Skeleton, TextField, Typography } from '@mui/material'
+import { Box, Skeleton, Typography } from '@mui/material'
 import { useGetPostQuery } from '__generated/graphql'
 import { useParams } from 'react-router'
 import { StyledImg } from './styles'

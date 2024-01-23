@@ -8,7 +8,6 @@ import { CustomSnackbar } from 'components/notistack/index.tsx'
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <NotistackProvider>
     <CustomSnackbar />
-
     <ApolloWrapper>
       <App />
     </ApolloWrapper>

@@ -20,7 +20,7 @@ import { Centered, Flex, LightStyledLink, StyledLink, styledLogo } from '../styl
 function ResponsiveAppBar() {
   const auth = useAuthStore()
   const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null)
-
+  console.log(auth)
   const handleOpenUserMenu = (event: MouseEvent<HTMLElement>) => {
     setAnchorElUser(event.currentTarget)
   }

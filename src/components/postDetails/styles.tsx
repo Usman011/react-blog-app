@@ -1,4 +1,4 @@
-import { Box } from '@mui/material'
+import { Typography } from '@mui/material'
 import styled from 'styled-components'
 
 export const StyledImg = styled('img')(() => ({
@@ -10,7 +10,8 @@ export const StyledImg = styled('img')(() => ({
   cursor: 'pointer'
 }))
 
-export const StyledText = styled(Box)(() => ({
+export const StyledText = styled(Typography)(() => ({
   color: 'blue',
-  padding: '1rem'
+  padding: '.5rem',
+  cursor: 'pointer'
 }))

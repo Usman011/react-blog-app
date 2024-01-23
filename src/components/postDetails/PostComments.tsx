@@ -7,7 +7,6 @@ import CommentReply from './CommentReply'
 import LoadingButton from 'components/common/LoadingButton'
 import { IComment } from 'types/component.types'
 import { INPUT_VARIANTS } from 'types/form.types'
-import { ALERT } from 'components/notistack'
 
 interface PostCommentProps {
   postId: number
@@ -27,8 +26,11 @@ const PostComment: FC<PostCommentProps> = ({ postId }) => {
     onCompleted: (response: GetCommentQuery) => {
       console.log('response', response)
       setAllComments(prev => [...response.getComment.comments, ...prev])
+      setTotalComment(response.getComment.total)
     }
   })
+
+  const [totalComments, setTotalComment] = useState(0)
 
   const hasMore = allComments.length < (data?.getComment?.total || 0)
 
@@ -38,6 +40,7 @@ const PostComment: FC<PostCommentProps> = ({ postId }) => {
     onCompleted: response => {
       setComment('')
       setAllComments(prev => [{ ...response.createComment }, ...prev])
+      setTotalComment(prev => prev + 1)
     }
   })
 
@@ -54,7 +57,7 @@ const PostComment: FC<PostCommentProps> = ({ postId }) => {
 
   return (
     <Box>
-      <Flex gap={2} mt={2}>
+      <Flex gap={1} mt={2}>
         <TextField
           value={comment}
           variant={INPUT_VARIANTS.OUTLINED}
@@ -71,7 +74,7 @@ const PostComment: FC<PostCommentProps> = ({ postId }) => {
       {allComments.length !== 0 ? (
         <Box>
           <Typography variant='subtitle1' fontWeight='bold' py={1}>
-            {` Comments ( ${data?.getComment.total || 0} )`}
+            {` Comments ( ${totalComments} )`}
           </Typography>
         </Box>
       ) : (
@@ -87,19 +90,15 @@ const PostComment: FC<PostCommentProps> = ({ postId }) => {
             <Flex alignItems='center' gap={1}>
               <AccountCircleIcon sx={{ color: '#999999', fontSize: '35px' }} />
               <Typography
-                variant='body1'
-                fontWeight='500'
+                variant='subtitle2'
+                fontWeight='700'
               >{`${item.user?.firstName} ${item.user?.lastName}`}</Typography>
             </Flex>
-            <Typography color='lightText' variant='body1' pb={1} pl={5}>
+            <Typography color='lightText' variant='body1' pl={5}>
               {item.text}
             </Typography>
 
-            <CommentReply
-              // isEmpty={item.replies?.length === 0}
-              postId={postId}
-              commentId={item.id}
-            />
+            <CommentReply postId={postId} commentId={item.id} />
           </Box>
         )
       })}

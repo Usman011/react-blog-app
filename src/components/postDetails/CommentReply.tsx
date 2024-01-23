@@ -1,15 +1,10 @@
-import { FC, useEffect, useState } from 'react'
+import { FC, useState } from 'react'
 import { Box, CircularProgress, TextField, Typography } from '@mui/material'
-import {
-  useAddReplyToCommentMutation,
-  useGetRepliesOfCommentLazyQuery,
-  useGetRepliesOfCommentQuery
-} from '__generated/graphql'
+import { useAddReplyToCommentMutation, useGetRepliesOfCommentQuery } from '__generated/graphql'
 import { Flex } from 'components/common/styles'
 import AccountCircleIcon from '@mui/icons-material/AccountCircle'
 import { INPUT_VARIANTS } from 'types/form.types'
 import LoadingButton from 'components/common/LoadingButton'
-import { ALERT } from 'components/notistack'
 import { StyledText } from './styles'
 import { IComment } from 'types/component.types'
 
@@ -65,26 +60,26 @@ const CommentReply: FC<CommentReplyProps> = ({ commentId, postId }) => {
   return (
     <Box pl={5}>
       {showReply && (
-        <Box>
+        <Box mt={2}>
           {loading && <CircularProgress />}
           {allComments?.map(item => {
             return (
-              <Box key={item.id}>
-                <Flex alignItems='center' gap={1}>
+              <Box key={item.id} >
+                <Flex alignItems='center' gap={1} mt={1}>
                   <AccountCircleIcon sx={{ color: '#999999', fontSize: '35px' }} />
                   <Typography
-                    variant='body1'
-                    fontWeight='500'
+                    variant='subtitle2'
+                    fontWeight='700'
                   >{`${item.user?.firstName} ${item.user?.lastName}`}</Typography>
                 </Flex>
-                <Typography color='lightText' variant='body1' pb={1} pl={5}>
+                <Typography color='lightText' variant='body1' pl={4}>
                   {item.text}
                 </Typography>
               </Box>
             )
           })}
           {!hasMore ? (
-            <Typography variant='body2' color='lightText'>
+            <Typography variant='body2' color='lightText' mt={2}>
               {allComments.length === 0 ? '' : 'No More comments'}
             </Typography>
           ) : (
@@ -99,7 +94,7 @@ const CommentReply: FC<CommentReplyProps> = ({ commentId, postId }) => {
       )}
 
       {showReplyButton && (
-        <Flex gap={2} mt={2}>
+        <Flex gap={1} mt={2}>
           <TextField
             value={comment}
             variant={INPUT_VARIANTS.OUTLINED}
@@ -115,7 +110,7 @@ const CommentReply: FC<CommentReplyProps> = ({ commentId, postId }) => {
         </Flex>
       )}
       <Flex gap={2}>
-        <StyledText onClick={() => setShowReplyButton(prev => !prev)}>
+        <StyledText variant='body2' onClick={() => setShowReplyButton(prev => !prev)}>
           {!showReplyButton ? 'Reply' : 'Close'}
         </StyledText>
         {data?.getRepliesOfComment.total ? (

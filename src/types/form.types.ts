@@ -1,9 +1,8 @@
-import { Post, UserInput } from '__generated/graphql'
+import { UserInput } from '__generated/graphql'
 
 export interface ISignupForm extends UserInput {
   confirmPassword: string
 }
-
 
 export enum ALERT_TYPE {
   ERROR = 'error',

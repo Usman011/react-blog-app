@@ -3,6 +3,7 @@ import { darkModePalette, lightModePalette } from './palette'
 import { typography } from './typography'
 import { breakpoints } from './breakpoints'
 import { transitions } from './transitions'
+import { spacing } from './spacing'
 
 export enum ThemeVariantsProps {
   light = 'light',
@@ -14,6 +15,7 @@ export const CustomTheme = (mode: ThemeVariantsProps) => {
     palette: {
       ...(mode === ThemeVariantsProps.light ? lightModePalette : darkModePalette)
     },
+    spacing,
     typography,
     breakpoints,
     transitions
